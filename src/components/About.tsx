@@ -1,52 +1,91 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { User, Code, Cloud } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 
 const About = () => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
 
   return (
-    <section id="about" className="py-24 gradient-bg" ref={ref}>
+    <section id="about" className="py-24" ref={ref}>
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto"
         >
-          <h2 className="font-display text-3xl md:text-4xl font-bold mb-2 text-center">
-            About <span className="gradient-text">Me</span>
+          <p className="section-label">ABOUT ME</p>
+          <h2 className="font-display text-3xl md:text-4xl font-bold mb-12">
+            Passionate about creating meaningful{" "}
+            <span className="gradient-text">digital experiences</span>
           </h2>
-          <p className="text-muted-foreground text-center mb-12">Get to know me better</p>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-10">
+          {/* Stats row */}
+          <div className="grid grid-cols-3 gap-6 mb-12 max-w-md">
             {[
-              { icon: User, title: "Student", desc: "CS Engineering at Lovely Professional University with Cloud Computing minor." },
-              { icon: Code, title: "Developer", desc: "Building real-world projects with Python, web technologies, and modern tools." },
-              { icon: Cloud, title: "Cloud Enthusiast", desc: "Passionate about AWS, cloud architecture, and scalable solutions." },
-            ].map((item, i) => (
+              { val: "B.Tech", label: "CSE Degree" },
+              { val: "Cloud", label: "Minor" },
+              { val: "LPU", label: "University" },
+            ].map((s, i) => (
               <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 30 }}
+                key={s.label}
+                initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.2 + i * 0.15, duration: 0.5 }}
-                className="glass-card p-6 text-center hover-lift"
+                transition={{ delay: 0.2 + i * 0.1, duration: 0.4 }}
+                className="glass-card p-4 text-center"
               >
-                <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-                  <item.icon size={24} />
-                </div>
-                <h3 className="font-display font-semibold text-lg mb-2">{item.title}</h3>
-                <p className="text-muted-foreground text-sm">{item.desc}</p>
+                <p className="font-display text-2xl font-bold gradient-text">{s.val}</p>
+                <p className="text-xs text-muted-foreground mt-1">{s.label}</p>
               </motion.div>
             ))}
           </div>
 
-          <div className="glass-card p-8 text-center">
-            <p className="text-muted-foreground leading-relaxed">
-              I am a Computer Science Engineering student at Lovely Professional University with a minor in Cloud Computing.
-              I enjoy building real-world projects using Python, web technologies, and cloud platforms.
-              I am passionate about solving algorithmic problems and developing intelligent applications.
-            </p>
+          <div className="grid md:grid-cols-2 gap-12">
+            <div>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                I am a Computer Science Engineering student at Lovely Professional University with a minor in Cloud Computing. I enjoy building real-world projects using Python, web technologies, and cloud platforms. I am passionate about solving algorithmic problems and developing intelligent applications.
+              </p>
+              <blockquote className="border-l-2 border-primary/40 pl-4 text-muted-foreground italic text-sm mb-8">
+                "Any fool can write code that a computer can understand. Good programmers write code that humans can understand."
+              </blockquote>
+              <div className="flex flex-wrap gap-3">
+                <a href="#contact" className="btn-primary inline-flex items-center gap-2">
+                  Contact Me <ArrowRight size={16} />
+                </a>
+                <a href="#" className="btn-outline inline-flex items-center gap-2">
+                  <Download size={16} /> Download Resume
+                </a>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="glass-card p-5">
+                <h3 className="font-display font-semibold mb-4">Personal Details</h3>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Email</span>
+                    <span className="text-foreground">Ayushman0426@gmail.com</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Location</span>
+                    <span className="text-foreground">Punjab, India</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">University</span>
+                    <span className="text-foreground">LPU</span>
+                  </div>
+                </div>
+              </div>
+              <div className="glass-card p-5">
+                <h3 className="font-display font-semibold mb-4">Hobbies & Interests</h3>
+                <div className="flex flex-wrap gap-2">
+                  {["💻 Coding", "☁️ Cloud", "📚 Reading", "🎮 Gaming", "🎧 Music", "✈️ Traveling"].map((h) => (
+                    <span key={h} className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs">
+                      {h}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </motion.div>
       </div>
