@@ -24,23 +24,31 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-24" ref={ref}>
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <p className="section-label">GET IN TOUCH</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-            <span className="gradient-text">CONTACT ME</span>
-          </h2>
-          <p className="text-muted-foreground mb-12 max-w-xl">
-            Have a project in mind? Feel free to reach out and let's create something amazing together.
-          </p>
+          <div className="grid md:grid-cols-2 gap-16 items-start mb-1">
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl">
+  <div>
+    <p className="section-label">GET IN TOUCH</p>
+
+    <h2 className="font-display text-5xl md:text-6xl font-bold gradient-text mb-6">
+      CONTACT ME
+    </h2>
+  </div>
+
+  <p className="text-muted-foreground max-w-md">
+    Have a project in mind? Feel free to reach out and let's create something amazing together.
+  </p>
+
+</div>
+
+          <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
             {/* Contact Info */}
-            <div>
+            <div className="glass-card p-8 rounded-2xl border border-white/5 h-fit">
               <h3 className="font-display font-bold text-lg mb-6">Contact Information</h3>
               <div className="space-y-4 mb-8">
                 {[
@@ -74,7 +82,7 @@ const Contact = () => {
             </div>
 
             {/* Form */}
-            <div>
+            <div className="glass-card p-8 rounded-2xl border border-white/5">
               <h3 className="font-display font-bold text-lg mb-6">Send a Message</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <input

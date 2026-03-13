@@ -3,12 +3,17 @@ import { useInView } from "react-intersection-observer";
 import { Cloud, Code, Database, Layout, Server, Search } from "lucide-react";
 
 const services = [
-  { icon: Code, title: "Python Development", desc: "Building robust applications and scripts with Python, FastAPI, and automation tools.", num: "01" },
-  { icon: Cloud, title: "Cloud Architecture", desc: "Designing and deploying scalable cloud solutions on AWS with best practices.", num: "02" },
-  { icon: Database, title: "Data Structures & Algorithms", desc: "Solving complex algorithmic problems with efficient data structure implementations.", num: "03" },
-  { icon: Layout, title: "Web Development", desc: "Creating responsive, modern web applications using HTML, CSS, and JavaScript.", num: "04" },
-  { icon: Server, title: "Linux Administration", desc: "Managing Linux systems, LVM configuration, and server administration.", num: "05" },
-  { icon: Search, title: "AI & Automation", desc: "Building AI-powered applications using Gemini API and YouTube API integrations.", num: "06" },
+  {
+    icon: Code,
+    title: "Linux Fundamentals | LPU Skill Development",
+    desc: [
+      "Gained practical experience with core Linux commands for file management, user permissions, networking, and system administration tasks.",
+      "Performed Logical Volume Management (LVM) operations including volume creation, resizing, expansion, and storage monitoring.",
+      "Configured Access Control Lists (ACLs) to implement fine-grained permission control in multi-user environments.",
+      "Strengthened terminal proficiency through hands-on troubleshooting, system diagnostics, and performance checks."
+    ],
+    num: "01"
+  }
 ];
 
 const Services = () => {
@@ -22,31 +27,40 @@ const Services = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <p className="section-label">WHAT I OFFER</p>
+          
           <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-            <span className="gradient-text">SERVICES</span>
+            <span className="gradient-text">Training</span>
           </h2>
           <p className="text-muted-foreground mb-12 max-w-xl">
-            Bringing ideas to life with cloud engineering and development solutions tailored to your needs.
+            Learned core Linux concepts including file systems, process management, and shell command usage.
           </p>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="max-w-3xl">
             {services.map((s, i) => (
               <motion.div
                 key={s.title}
                 initial={{ opacity: 0, y: 30 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.1 + i * 0.08, duration: 0.4 }}
-                className="glass-card p-6 hover-lift group relative overflow-hidden"
+                className="glass-card p-8 hover-lift group relative overflow-hidden border-l-4 border-primary/50 hover:shadow-[0_0_30px_rgba(168,85,247,0.2)] transition-all"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <s.icon size={24} className="text-primary" />
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+  <s.icon size={20} className="text-primary" />
+</div>
                   <span className="text-4xl font-display font-bold text-border/30 group-hover:text-primary/20 transition-colors">
                     {s.num}
                   </span>
                 </div>
                 <h3 className="font-display font-bold text-lg mb-2">{s.title}</h3>
-                <p className="text-muted-foreground text-sm">{s.desc}</p>
+                <ul className="text-muted-foreground text-sm leading-relaxed space-y-50 mt-30">
+  {s.desc.map((point, index) => (
+    <li key={index} className="flex items-start gap-2">
+  <span className="text-primary mt-1">▹</span>
+  <span>{point}</span>
+</li>
+  ))}
+</ul>
               </motion.div>
             ))}
           </div>

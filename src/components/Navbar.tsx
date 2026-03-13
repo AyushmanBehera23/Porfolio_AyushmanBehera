@@ -7,8 +7,8 @@ const navLinks = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
-  { label: "Experience", href: "#education" },
-  { label: "Services", href: "#services" },
+  { label: "Education", href: "#education" },
+  { label: "Training", href: "#services" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -56,9 +56,7 @@ const Navbar = () => {
           ))}
         </div>
 
-        <a href="#home" className="font-display text-xl font-bold gradient-text">
-          Ayushman Behera
-        </a>
+
 
         <a
           href="mailto:Ayushman0426@gmail.com"

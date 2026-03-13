@@ -45,15 +45,20 @@ const About = () => {
                 I am a Computer Science Engineering student at Lovely Professional University with a minor in Cloud Computing. I enjoy building real-world projects using Python, web technologies, and cloud platforms. I am passionate about solving algorithmic problems and developing intelligent applications.
               </p>
               <blockquote className="border-l-2 border-primary/40 pl-4 text-muted-foreground italic text-sm mb-8">
-                "Any fool can write code that a computer can understand. Good programmers write code that humans can understand."
+                "Cloud computing isn't about where the code runs; it's about how the system behaves when the network partitions. My job is to minimize the blast radius of inevitable failures."
               </blockquote>
               <div className="flex flex-wrap gap-3">
                 <a href="#contact" className="btn-primary inline-flex items-center gap-2">
                   Contact Me <ArrowRight size={16} />
                 </a>
-                <a href="#" className="btn-outline inline-flex items-center gap-2">
-                  <Download size={16} /> Download Resume
-                </a>
+                <a
+  href="/AyushmanBehera_Resume_2026.pdf"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="btn-outline inline-flex items-center gap-2"
+>
+  <Download size={16} /> Download Resume
+</a>
               </div>
             </div>
 
@@ -85,6 +90,58 @@ const About = () => {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Education sub-section */}
+          <div className="mt-16" id="education">
+            <h3 className="font-display text-xl font-bold mb-6">Education</h3>
+            <div className="space-y-4">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.5, duration: 0.4 }}
+                className="glass-card p-6"
+              >
+                <h4 className="font-display font-bold text-lg">Bachelor of Technology - Computer Science Engineering</h4>
+                <p className="text-muted-foreground text-sm mt-1">Lovely Professional University, Punjab</p>
+                <p className="text-muted-foreground text-sm">Minor: Cloud Computing</p>
+                <p className="text-muted-foreground text-sm">CGPA : 7.01</p>
+              </motion.div>
+
+              {/* 12th */}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: 0.4 }}
+      className="glass-card p-6"
+    >
+      <h4 className="font-display font-bold text-lg">
+        Kendriya Vidyalaya Berhampur (Class XII)
+      </h4>
+      <p className="text-muted-foreground text-sm">
+        PCM
+      </p>
+      <p className="text-muted-foreground text-sm mt-1">
+        2021 - 2023
+      </p>
+    </motion.div>
+
+    {/* 10th */}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: 0.5 }}
+      className="glass-card p-6"
+    >
+      <h4 className="font-display font-bold text-lg">
+        Kendriya Vidyalaya Chhawla New Delhi (Class X)
+      </h4>
+      <p className="text-muted-foreground text-sm mt-1">
+        Completed in 2021
+      </p>
+    </motion.div>
+
             </div>
           </div>
         </motion.div>

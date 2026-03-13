@@ -1,18 +1,29 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 const skills = [
-  { name: "Python", level: 90 },
-  { name: "Java", level: 70 },
-  { name: "HTML, CSS & JavaScript", level: 85 },
-  { name: "Data Structures & Algorithms", level: 75 },
-  { name: "AWS / Cloud Computing", level: 80 },
-  { name: "Linux", level: 75 },
-  { name: "Git & GitHub", level: 85 },
+  { name: "Python", category: "Languages" },
+  { name: "Java", category: "Languages" },
+  { name: "JavaScript", category: "Languages" },
+  { name: "React", category: "Frameworks" },
+  { name: "FastAPI", category: "Frameworks" },
+  { name: "AWS", category: "Cloud & OS" },
+  { name: "Docker", category: "Cloud & OS" },
+  { name: "Linux", category: "Cloud & OS" },
+  { name: "Git & GitHub", category: "Tools" },
+  { name: "AZURE", category: "Cloud & OS" },
 ];
+
+const categories = ["All", "Languages", "Frameworks", "Cloud & OS", "Tools"];
 
 const Skills = () => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  const filteredSkills = skills.filter(
+    (skill) => activeCategory === "All" || skill.category === activeCategory
+  );
 
   return (
     <section id="skills" className="py-24" ref={ref}>
@@ -22,54 +33,57 @@ const Skills = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <p className="section-label">MY EXPERTISE</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-            <span className="gradient-text">SKILLS</span>
-          </h2>
-          <p className="text-muted-foreground mb-12 max-w-xl">
-            Attitude is more important than the past, than education, than money, than circumstances, than what people do or say.
-          </p>
+          <div className="grid md:grid-cols-2 gap-12 items-start mb-12">
+            <div>
+              <p className="section-label">MY EXPERTISE</p>
+              <h2 className="font-display text-4xl md:text-5xl font-bold gradient-text">
+                SKILLS
+              </h2>
+            </div>
+            <p className="text-muted-foreground max-w-md">
+              Attitude is more important than the past, than education, than money,
+              than circumstances, than what people do or say.
+            </p>
+          </div>
 
-          <div className="max-w-2xl space-y-6">
-            {skills.map((skill, i) => (
-              <motion.div
-                key={skill.name}
-                initial={{ opacity: 0, x: -20 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: 0.1 + i * 0.08, duration: 0.4 }}
+          <div className="flex flex-wrap gap-3 mb-12">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeCategory === cat
+                    ? "bg-primary text-primary-foreground shadow-glow"
+                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border/50"
+                  }`}
               >
-                <div className="flex justify-between mb-2">
-                  <span className="text-sm font-medium text-foreground">{skill.name}</span>
-                  <span className="text-sm text-muted-foreground">{skill.level}%</span>
-                </div>
-                <div className="skill-bar-bg">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={inView ? { width: `${skill.level}%` } : { width: 0 }}
-                    transition={{ delay: 0.3 + i * 0.08, duration: 1, ease: "easeOut" }}
-                    className="skill-bar-fill"
-                  />
-                </div>
-              </motion.div>
+                {cat}
+              </button>
             ))}
           </div>
 
-          {/* Education sub-section */}
-          <div className="mt-16" id="education">
-            <h3 className="font-display text-xl font-bold mb-6">Education</h3>
-            <div className="space-y-4">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.5, duration: 0.4 }}
-                className="glass-card p-6"
-              >
-                <h4 className="font-display font-bold text-lg">Bachelor of Technology - Computer Science Engineering</h4>
-                <p className="text-muted-foreground text-sm mt-1">Lovely Professional University, Punjab</p>
-                <p className="text-muted-foreground text-sm">Minor: Cloud Computing</p>
-              </motion.div>
-            </div>
-          </div>
+          <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <AnimatePresence mode="popLayout">
+              {filteredSkills.map((skill, i) => (
+                <motion.div
+                  layout
+                  key={skill.name}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.3 }}
+                  className="glass-card p-6 flex flex-col justify-center items-center text-center hover-lift group border border-border/50 hover:border-primary/50 transition-colors h-32"
+                >
+                  <div className="text-xl font-bold font-display group-hover:text-primary transition-colors">
+                    {skill.name}
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-2 uppercase tracking-wider font-semibold">
+                    {skill.category}
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
         </motion.div>
       </div>
     </section>
