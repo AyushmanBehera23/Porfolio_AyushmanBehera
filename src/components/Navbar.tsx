@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Mail } from "lucide-react";
+import { Menu, X, Mail, Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "next-themes";
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -16,6 +17,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const onScroll = () => {
@@ -58,13 +60,22 @@ const Navbar = () => {
 
 
 
-        <a
-          href="mailto:Ayushman0426@gmail.com"
-          className="hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <Mail size={16} />
-          Ayushman0426@gmail.com
-        </a>
+        <div className="hidden md:flex items-center gap-6">
+          <a
+            href="mailto:Ayushman0426@gmail.com"
+            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Mail size={16} />
+            Ayushman0426@gmail.com
+          </a>
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="p-2 rounded-lg bg-secondary text-muted-foreground hover:text-foreground transition-colors"
+            title="Toggle theme"
+          >
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+        </div>
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -97,6 +108,18 @@ const Navbar = () => {
                   {link.label}
                 </a>
               ))}
+              <div className="px-3 py-2 mt-2 border-t border-border/50">
+                <button
+                  onClick={() => {
+                    setTheme(theme === "dark" ? "light" : "dark");
+                    setMobileOpen(false);
+                  }}
+                  className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors w-full"
+                >
+                  {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+                  Toggle Theme
+                </button>
+              </div>
             </div>
           </motion.div>
         )}

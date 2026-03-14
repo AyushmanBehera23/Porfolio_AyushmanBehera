@@ -7,12 +7,18 @@ import * as THREE from 'three';
 function ServerNode({ position, color, index }: { position: [number, number, number], color: string, index: number }) {
   const ref = useRef<THREE.Mesh>(null!);
   const glowMaterial = useRef<THREE.MeshStandardMaterial>(null!);
+  const backLightsMaterial = useRef<THREE.MeshStandardMaterial>(null!);
 
   useFrame((state) => {
     // Make individual servers pulse their emissive intensity
     if (glowMaterial.current) {
       glowMaterial.current.emissiveIntensity = 
         Math.max(0.2, Math.sin(state.clock.elapsedTime * 2 + index) * 0.8 + 0.2);
+    }
+    // Faster, erratic blinking for back lights to simulate network activity
+    if (backLightsMaterial.current) {
+      backLightsMaterial.current.emissiveIntensity = 
+        Math.max(0.1, Math.sin(state.clock.elapsedTime * 15 + index * 5) > 0 ? 1 : 0.2);
     }
   });
 
@@ -22,8 +28,9 @@ function ServerNode({ position, color, index }: { position: [number, number, num
       <Box args={[4, 0.4, 3]}>
         <meshStandardMaterial color="#1a1a24" roughness={0.7} metalness={0.8} />
       </Box>
+      
       {/* Front Panel Glow Line */}
-      <Box args={[3.8, 0.1, 0.1]} position={[0, 0, 1.5]}>
+      <Box args={[3.8, 0.1, 0.1]} position={[0, 0, 1.501]}>
         <meshStandardMaterial 
           ref={glowMaterial}
           color={color} 
@@ -32,19 +39,62 @@ function ServerNode({ position, color, index }: { position: [number, number, num
           toneMapped={false} 
         />
       </Box>
+
+      {/* Back Panel Details */}
+      {/* Power supply / fan cutouts */}
+      <Box args={[0.6, 0.2, 0.1]} position={[-1.4, 0, -1.501]}>
+        <meshStandardMaterial color="#0b0b0f" roughness={1.0} />
+      </Box>
+      <Box args={[0.6, 0.2, 0.1]} position={[-0.6, 0, -1.501]}>
+        <meshStandardMaterial color="#0b0b0f" roughness={1.0} />
+      </Box>
+      
+      {/* Network port & Activity light (Blinking Green) */}
+      <Box args={[0.3, 0.15, 0.1]} position={[0.4, 0, -1.501]}>
+        <meshStandardMaterial color="#2d2d3a" roughness={0.8} />
+      </Box>
+      <Box args={[0.06, 0.06, 0.1]} position={[0.3, 0, -1.505]}>
+        <meshStandardMaterial 
+          ref={backLightsMaterial}
+          color="#22c55e" 
+          emissive="#22c55e"
+          emissiveIntensity={1} 
+          toneMapped={false} 
+        />
+      </Box>
+      
+      {/* Secondary Status light (Solid/Dim Orange or Blue depending on server index) */}
+      <Box args={[0.06, 0.06, 0.1]} position={[0.5, 0, -1.505]}>
+        <meshStandardMaterial 
+          color={index % 2 === 0 ? "#f59e0b" : "#3b82f6"} 
+          emissive={index % 2 === 0 ? "#f59e0b" : "#3b82f6"}
+          emissiveIntensity={0.6} 
+          toneMapped={false} 
+        />
+      </Box>
+
+      {/* Expansion slot / PCI bracket area */}
+      <Box args={[1.2, 0.2, 0.1]} position={[1.2, 0, -1.501]}>
+        <meshStandardMaterial color="#1f1f2e" metalness={0.5} roughness={0.6} />
+      </Box>
     </group>
   );
 }
 
-// Represents the entire rack of servers
 function ServerRack() {
   const group = useRef<THREE.Group>(null!);
+  const sideLightsMaterial = useRef<THREE.MeshStandardMaterial>(null!);
 
   useFrame((state) => {
     // Slowly auto-rotate the rack for a cinematic feel
     if (group.current) {
       group.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.2) * 0.3;
       group.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.1) * 0.1;
+    }
+    // Make the side caution lights blink slowly
+    if (sideLightsMaterial.current) {
+      sideLightsMaterial.current.emissiveIntensity = 
+        Math.max(0.1, Math.sin(state.clock.elapsedTime * 3) > 0.5 ? 0.8 : 0.2);
     }
   });
 
@@ -59,12 +109,54 @@ function ServerRack() {
     }));
   }, []);
 
+  // Frame dimensions
+  const rackWidth = 4.4;
+  const rackHeight = numServers * 0.6 + 0.8;
+  const rackDepth = 3.2;
+
   return (
     <group ref={group}>
       {/* Main Structural Rack Frame */}
-      <Box args={[4.4, numServers * 0.6 + 0.8, 3.2]} position={[0, -0.3, 0]}>
+      <Box args={[rackWidth, rackHeight, rackDepth]} position={[0, -0.3, 0]}>
         <meshStandardMaterial color="#0f0f13" roughness={0.9} metalness={0.1} wireframe={true} />
       </Box>
+
+      {/* --- ADDED SIDE DETAILS --- */}
+      {/* Left Side Panel (partial enclosure) */}
+      <Box args={[0.1, rackHeight - 0.2, rackDepth - 0.5]} position={[-rackWidth/2 - 0.05, -0.3, 0]}>
+        <meshStandardMaterial color="#1a1a24" roughness={0.8} metalness={0.5} />
+      </Box>
+      {/* Left Cooling Vents (Dark indentations) */}
+      <Box args={[0.12, rackHeight - 1.0, 1.0]} position={[-rackWidth/2 - 0.05, -0.3, 0]}>
+        <meshStandardMaterial color="#050508" roughness={1.0} />
+      </Box>
+      {/* Left Caution Light */}
+      <Box args={[0.15, 0.4, 0.1]} position={[-rackWidth/2 - 0.05, rackHeight/2 - 0.7, 1.2]}>
+        <meshStandardMaterial 
+          ref={sideLightsMaterial}
+          color="#eab308" 
+          emissive="#eab308" 
+          emissiveIntensity={0.8} 
+        />
+      </Box>
+
+      {/* Right Side Panel (partial enclosure) */}
+      <Box args={[0.1, rackHeight - 0.2, rackDepth - 0.5]} position={[rackWidth/2 + 0.05, -0.3, 0]}>
+        <meshStandardMaterial color="#1a1a24" roughness={0.8} metalness={0.5} />
+      </Box>
+      {/* Right Cooling Vents (Dark indentations) */}
+      <Box args={[0.12, rackHeight - 1.0, 1.0]} position={[rackWidth/2 + 0.05, -0.3, 0]}>
+        <meshStandardMaterial color="#050508" roughness={1.0} />
+      </Box>
+      {/* Right Caution Light */}
+      <Box args={[0.15, 0.4, 0.1]} position={[rackWidth/2 + 0.05, rackHeight/2 - 0.7, 1.2]}>
+        <meshStandardMaterial 
+          color="#eab308" 
+          emissive="#eab308" 
+          emissiveIntensity={0.8} 
+        />
+      </Box>
+      {/* --------------------------- */}
 
       {/* Insert Servers */}
       {servers.map((server, i) => (

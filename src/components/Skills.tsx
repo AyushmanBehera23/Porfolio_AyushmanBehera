@@ -5,7 +5,9 @@ import { useInView } from "react-intersection-observer";
 const skills = [
   { name: "Python", category: "Languages" },
   { name: "Java", category: "Languages" },
-  { name: "JavaScript", category: "Languages" },
+  { name: "JavaScript", category: "Web Dev" },
+  { name: "HTML", category: "Web Dev" },
+  { name: "CSS", category: "Web Dev" },
   { name: "React", category: "Frameworks" },
   { name: "FastAPI", category: "Frameworks" },
   { name: "AWS", category: "Cloud & OS" },
@@ -15,7 +17,7 @@ const skills = [
   { name: "AZURE", category: "Cloud & OS" },
 ];
 
-const categories = ["All", "Languages", "Frameworks", "Cloud & OS", "Tools"];
+const categories = ["All", "Web Dev", "Languages", "Frameworks", "Cloud & OS", "Tools"];
 
 const Skills = () => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
