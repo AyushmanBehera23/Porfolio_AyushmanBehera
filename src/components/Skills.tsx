@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer";
 const skills = [
   { name: "Python", category: "Languages" },
   { name: "Java", category: "Languages" },
+  { name: "C++", category: "Languages" },
   { name: "JavaScript", category: "Web Dev" },
   { name: "HTML", category: "Web Dev" },
   { name: "CSS", category: "Web Dev" },

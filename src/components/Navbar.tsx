@@ -37,9 +37,8 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border/50" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border/50" : "bg-transparent"
+        }`}
     >
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         <div className="flex items-center gap-8">
@@ -47,11 +46,10 @@ const Navbar = () => {
             <a
               key={link.href}
               href={link.href}
-              className={`hidden md:block text-sm font-medium transition-colors ${
-                activeSection === link.href.slice(1)
+              className={`hidden md:block text-sm font-medium transition-colors ${activeSection === link.href.slice(1)
                   ? "text-foreground"
                   : "text-muted-foreground hover:text-foreground"
-              }`}
+                }`}
             >
               {link.label}
             </a>
@@ -66,7 +64,7 @@ const Navbar = () => {
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <Mail size={16} />
-            Ayushman0426@gmail.com
+            ayushman0426@gmail.com
           </a>
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -99,11 +97,10 @@ const Navbar = () => {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    activeSection === link.href.slice(1)
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${activeSection === link.href.slice(1)
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground"
-                  }`}
+                    }`}
                 >
                   {link.label}
                 </a>
